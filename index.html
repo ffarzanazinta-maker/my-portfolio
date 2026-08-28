@@ -1,1 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farzana — Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0806;
+    --flame: #ff4a1c;
+    --ember: #8b1408;
+    --paper: #f5ece2;
+    --stone: #8a8078;
+  }
+  * { font-family: 'Inter', sans-serif; }
+  .display { font-family: 'Anton', sans-serif; }
 
+  body {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .hero-gradient {
+    background:
+      radial-gradient(ellipse 120% 80% at 30% 0%, rgba(255,74,28,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 100% 70% at 100% 100%, rgba(139,20,8,0.5) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0806 0%, #150907 55%, #0a0806 100%);
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .cross {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+  }
+  .cross::before, .cross::after {
+    content: '';
+    position: absolute;
+    background: rgba(245,236,226,0.35);
+  }
+  .cross::before { width: 100%; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
+  .cross::after { width: 1px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
+
+  .huge-name {
+    font-size: clamp(4rem, 16vw, 13rem);
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { animation: riseIn 1s cubic-bezier(0.16,1,0.3,1) both; }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.18s; }
+  .reveal-3 { animation-delay: 0.32s; }
+  .reveal-4 { animation-delay: 0.5s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; }
+  }
+
+  .btn-glow {
+    box-shadow: 0 0 0 1px rgba(255,74,28,0.5), 0 8px 30px -8px rgba(255,74,28,0.6);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .btn-glow:hover {
+    box-shadow: 0 0 0 1px rgba(255,74,28,0.9), 0 12px 40px -6px rgba(255,74,28,0.85);
+    transform: translateY(-2px);
+  }
+
+  .ceo-card {
+    backdrop-filter: blur(6px);
+    background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+    border: 1px solid rgba(245,236,226,0.12);
+  }
+
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    height: 1px; width: 0;
+    background: var(--flame);
+    transition: width 0.25s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+</style>
+</head>
+<body class="overflow-x-hidden">
+
+<section class="relative min-h-screen hero-gradient overflow-hidden">
+  <div class="grain"></div>
+
+  <!-- Crosshair corner marks -->
+  <div class="cross" style="top:24px; left:24px;"></div>
+  <div class="cross" style="top:24px; right:24px;"></div>
+  <div class="cross" style="bottom:24px; left:24px;"></div>
+  <div class="cross" style="bottom:24px; right:24px;"></div>
+
+  <!-- Nav -->
+  <nav class="relative z-20 flex items-center justify-between px-6 md:px-12 pt-8 reveal reveal-1">
+    <span class="display text-xl tracking-wide">FARZANA</span>
+    <div class="hidden md:flex items-center gap-10 text-sm uppercase tracking-widest text-[var(--stone)]">
+      <a href="#home" class="nav-link hover:text-[var(--paper)] transition-colors">Home</a>
+      <a href="#portfolio" class="nav-link hover:text-[var(--paper)] transition-colors">Portfolio</a>
+      <a href="#about" class="nav-link hover:text-[var(--paper)] transition-colors">About</a>
+      <a href="#contact" class="nav-link hover:text-[var(--paper)] transition-colors">Contact</a>
+    </div>
+    <button class="md:hidden text-[var(--paper)]" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" aria-label="Toggle menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden relative z-20 flex flex-col gap-4 px-6 pt-6 text-sm uppercase tracking-widest text-[var(--stone)]">
+    <a href="#home">Home</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Meet the CEO card -->
+  <div class="ceo-card reveal reveal-2 absolute top-28 right-6 md:right-12 z-20 rounded-2xl p-3 w-40 md:w-48">
+    <div class="rounded-xl overflow-hidden aspect-[4/5] bg-gradient-to-br from-[#3a1a10] to-[#0a0806]">
+      <img src="images/farzana.jpg" alt="Farzana" class="w-full h-full object-cover">
+    </div>
+    <p class="text-[10px] uppercase tracking-widest text-[var(--stone)] mt-3">Meet the</p>
+    <p class="text-sm font-semibold">Developer</p>
+    <p class="display text-base text-[var(--flame)] leading-none mt-0.5">Farzana</p>
+  </div>
+
+  <!-- Left copy block -->
+  <div class="relative z-20 px-6 md:px-12 mt-24 md:mt-32 max-w-md reveal reveal-3">
+    <p class="text-xs uppercase tracking-[0.3em] text-[var(--flame)] mb-4">Studio / 2026</p>
+    <h2 class="text-2xl md:text-3xl font-semibold leading-snug">
+      Pick a plan, submit a job request, and your brand will kick off within 24 hours.
+    </h2>
+    <a href="#contact" class="btn-glow inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full text-sm uppercase tracking-widest font-semibold bg-[var(--paper)] text-[var(--ink)]">
+      Explore Now
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <!-- Bottom left services -->
+  <div class="relative z-20 px-6 md:px-12 mt-16 md:mt-0 md:absolute md:bottom-40 flex flex-wrap gap-x-8 gap-y-2 text-xs uppercase tracking-widest text-[var(--stone)] reveal reveal-4">
+    <span class="text-[var(--flame)]">01 /</span>
+    <span>Strategy</span>
+    <span class="opacity-40">—</span>
+    <span>Videography</span>
+    <span class="opacity-40">—</span>
+    <span>Branding</span>
+  </div>
+
+  <!-- Huge name -->
+  <div class="relative z-10 mt-10 md:mt-0 md:absolute md:bottom-0 left-0 right-0 select-none pointer-events-none">
+    <h1 class="huge-name display text-center md:text-left md:pl-8 text-[var(--paper)] reveal reveal-4" style="text-shadow: 0 0 80px rgba(255,74,28,0.25);">
+      FARZANA
+    </h1>
+  </div>
+</section>
+
+<!-- Portfolio section -->
+<section id="portfolio" class="relative bg-[var(--ink)] px-6 md:px-12 py-24 md:py-32">
+  <div class="flex items-end justify-between mb-14">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-[var(--flame)] mb-3">02 / Selected work</p>
+      <h2 class="display text-4xl md:text-5xl">The Portfolio</h2>
+    </div>
+  </div>
+  <div class="grid md:grid-cols-3 gap-6">
+    <article class="group relative rounded-2xl overflow-hidden aspect-[3/4] border border-white/5">
+      <img src="images/project-app.jpg" alt="App development project" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0806] via-[#0a0806]/40 to-transparent"></div>
+      <div class="absolute inset-0 flex items-center justify-center display text-6xl text-[var(--flame)]/40 pointer-events-none">01</div>
+      <div class="absolute bottom-0 left-0 right-0 p-5">
+        <p class="text-xs uppercase tracking-widest text-[var(--stone)]">App Development</p>
+        <p class="font-semibold">Financing App</p>
+        <p class="text-xs text-[var(--stone)] mt-1">Mobile finance platform, built end to end</p>
+      </div>
+    </article>
+    <article class="group relative rounded-2xl overflow-hidden aspect-[3/4] border border-white/5">
+      <img src="images/project-web.jpg" alt="Website development project" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0806] via-[#0a0806]/40 to-transparent"></div>
+      <div class="absolute inset-0 flex items-center justify-center display text-6xl text-[var(--flame)]/40 pointer-events-none">02</div>
+      <div class="absolute bottom-0 left-0 right-0 p-5">
+        <p class="text-xs uppercase tracking-widest text-[var(--stone)]">Website Development</p>
+        <p class="font-semibold">Client Platforms</p>
+        <p class="text-xs text-[var(--stone)] mt-1">Responsive sites, built to scale</p>
+      </div>
+    </article>
+    <article class="group relative rounded-2xl overflow-hidden aspect-[3/4] border border-white/5 p-5 flex flex-col justify-between">
+      <img src="images/project-stack.jpg" alt="Tools and stack" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity -z-10">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0a0806] via-[#0a0806]/60 to-[#0a0806]/30 -z-10"></div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-[var(--stone)] mb-1">Tools & Stack</p>
+        <p class="font-semibold mb-4">Full-stack & mid-stack</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">HTML/CSS</span>
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">JavaScript</span>
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">React</span>
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">Node.js</span>
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">SQL</span>
+        <span class="text-[11px] uppercase tracking-widest px-3 py-1 rounded-full border border-[var(--flame)]/40 text-[var(--flame)] bg-[var(--ink)]/60">Git</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- About section -->
+<section id="about" class="relative bg-[var(--ink)] px-6 md:px-12 py-24 md:py-32 border-t border-white/5">
+  <div class="grid md:grid-cols-2 gap-12 items-start">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-[var(--flame)] mb-3">03 / About</p>
+      <h2 class="display text-4xl md:text-5xl mb-6">About Me</h2>
+    </div>
+    <p class="text-lg text-[var(--stone)] leading-relaxed">
+      I'm Farzana, a developer working across app development, web development, and data analytics.
+      My background is in Information Technology, studied at HNTEC, where I built the foundation
+      for everything I do now — from front-end interfaces to the systems running behind them.
+      One project I'm especially proud of is a financing app I built end to end, handling everything
+      from the user-facing experience to the logic behind real financial data. I work comfortably
+      across the full stack and mid-stack, and I care about writing clean code and shipping things
+      that actually work for the people using them.
+    </p>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="relative bg-[var(--ink)] px-6 md:px-12 py-24 md:py-32 border-t border-white/5 text-center">
+  <p class="text-xs uppercase tracking-[0.3em] text-[var(--flame)] mb-4">04 / Get in touch</p>
+  <h2 class="display text-4xl md:text-6xl mb-8">Let's build<br class="md:hidden"> something.</h2>
+  <a href="mailto:hello@farzana.studio" class="btn-glow inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm uppercase tracking-widest font-semibold bg-[var(--paper)] text-[var(--ink)]">
+    hello@farzana.studio
+  </a>
+  <p class="text-xs text-[var(--stone)] mt-16">&copy; 2026 Farzana Studio. All rights reserved.</p>
+</section>
+
+</body>
+</html>
