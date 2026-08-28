@@ -26,16 +26,41 @@
     color: var(--paper);
   }
 
+  /* Hero gradient now sits ABOVE the slideshow as an overlay */
   .hero-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
     background:
       radial-gradient(ellipse 120% 80% at 30% 0%, rgba(217,207,255,0.35) 0%, transparent 55%),
       radial-gradient(ellipse 100% 70% at 100% 100%, rgba(184,198,255,0.5) 0%, transparent 60%),
       linear-gradient(180deg, #d9cfff 0%, #b8c6ff 55%, #0a0806 100%);
   }
 
+  /* Background slideshow */
+  .bg-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  .bg-slide.active {
+    opacity: 0.2;
+  }
+
   .grain {
     position: absolute;
     inset: 0;
+    z-index: 2;
     opacity: 0.05;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -46,6 +71,7 @@
     width: 22px;
     height: 22px;
     pointer-events: none;
+    z-index: 20;
   }
   .cross::before, .cross::after {
     content: '';
@@ -73,6 +99,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .reveal { animation: none; }
+    .bg-slide { transition: none; }
   }
 
   .btn-glow {
@@ -106,14 +133,28 @@
 </head>
 <body class="overflow-x-hidden">
 
-<section class="relative min-h-screen hero-gradient overflow-hidden">
+<section class="relative min-h-screen overflow-hidden">
+
+  <!-- Background slideshow (behind everything) -->
+  <div class="bg-slideshow">
+    <img src="images/bg1.jpg" alt="" class="bg-slide active">
+    <img src="images/bg2.jpg" alt="" class="bg-slide">
+    <img src="images/bg3.jpg" alt="" class="bg-slide">
+    <img src="images/bg4.jpg" alt="" class="bg-slide">
+  </div>
+
+  <!-- Gradient overlay sits above the slideshow -->
+  <div class="hero-gradient"></div>
+
   <div class="grain"></div>
 
+  <!-- Crosshair corner marks -->
   <div class="cross" style="top:24px; left:24px;"></div>
   <div class="cross" style="top:24px; right:24px;"></div>
   <div class="cross" style="bottom:24px; left:24px;"></div>
   <div class="cross" style="bottom:24px; right:24px;"></div>
 
+  <!-- Nav -->
   <nav class="relative z-20 flex items-center justify-between px-6 md:px-12 pt-8 reveal reveal-1">
     <span class="display text-xl tracking-wide">FARZANA</span>
     <div class="hidden md:flex items-center gap-10 text-sm uppercase tracking-widest text-[var(--stone)]">
@@ -133,6 +174,7 @@
     <a href="#contact">Contact</a>
   </div>
 
+  <!-- Meet the CEO card -->
   <div class="ceo-card reveal reveal-2 absolute top-28 right-6 md:right-12 z-20 rounded-2xl p-3 w-40 md:w-48">
     <div class="rounded-xl overflow-hidden aspect-[4/5] bg-gradient-to-br from-[#3a1a10] to-[#0a0806]">
       <img src="images/farzana.jpg" alt="Farzana" class="w-full h-full object-cover">
@@ -142,6 +184,7 @@
     <p class="display text-base text-[var(--flame)] leading-none mt-0.5">Farzana</p>
   </div>
 
+  <!-- Left copy block -->
   <div class="relative z-20 px-6 md:px-12 mt-24 md:mt-32 max-w-md reveal reveal-3">
     <p class="text-xs uppercase tracking-[0.3em] text-[var(--flame)] mb-4">Studio / 2026</p>
     <h2 class="text-2xl md:text-3xl font-semibold leading-snug">
@@ -153,6 +196,7 @@
     </a>
   </div>
 
+  <!-- Bottom left services -->
   <div class="relative z-20 px-6 md:px-12 mt-16 md:mt-0 md:absolute md:bottom-40 flex flex-wrap gap-x-8 gap-y-2 text-xs uppercase tracking-widest text-[var(--stone)] reveal reveal-4">
     <span class="text-[var(--flame)]">01 /</span>
     <span>Strategy</span>
@@ -162,6 +206,7 @@
     <span>Branding</span>
   </div>
 
+  <!-- Huge name -->
   <div class="relative z-10 mt-10 md:mt-0 md:absolute md:bottom-0 left-0 right-0 select-none pointer-events-none">
     <h1 class="huge-name display text-center md:text-left md:pl-8 text-[var(--paper)] reveal reveal-4" style="text-shadow: 0 0 80px rgba(168,179,255,0.25);">
       FARZANA
@@ -242,6 +287,21 @@
   </a>
   <p class="text-xs text-[var(--stone)] mt-16">&copy; 2026 Farzana Studio. All rights reserved.</p>
 </section>
+
+<script>
+  const slides = document.querySelectorAll('.bg-slide');
+  let currentSlide = 0;
+
+  function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }
+
+  if (slides.length > 1) {
+    setInterval(nextSlide, 5000);
+  }
+</script>
 
 </body>
 </html>
